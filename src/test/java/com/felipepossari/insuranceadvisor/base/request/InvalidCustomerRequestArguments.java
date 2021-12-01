@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_AGE_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_DEPENDENTS_INVALID;
-import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_HOUSE_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_HOUSE_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_INCOME_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_MARITAL_STATUS_EMPTY;
@@ -16,7 +15,6 @@ import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exceptio
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_INVALID_LENGTH;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_INVALID_VALUE;
-import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_VEHICLE_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_VEHICLE_INVALID;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.MARITAL_STATUS_INVALID;
 
@@ -26,8 +24,6 @@ public class InvalidCustomerRequestArguments {
                 Arguments.arguments("invalidAgeRequest", invalidAgeRequest(), FIELD_AGE_INVALID),
                 Arguments.arguments("invalidNullAgeRequest", invalidNullAgeRequest(), FIELD_AGE_INVALID),
                 Arguments.arguments("invalidDependentsRequest", invalidDependentsRequest(), FIELD_DEPENDENTS_INVALID),
-                Arguments.arguments("invalidNullObjectHouseRequest", invalidNullObjectHouseRequest(), FIELD_HOUSE_EMPTY),
-                Arguments.arguments("invalidEmptyHouseRequest", invalidEmptyHouseRequest(), FIELD_HOUSE_EMPTY),
                 Arguments.arguments("invalidDifferentStatusHouseRequest", invalidDifferentStatusHouseRequest(), FIELD_HOUSE_INVALID),
                 Arguments.arguments("invalidIncomeRequest", invalidIncomeRequest(), FIELD_INCOME_INVALID),
                 Arguments.arguments("invalidEmptyMaritalStatusRequest", invalidEmptyMaritalStatusRequest(), FIELD_MARITAL_STATUS_EMPTY),
@@ -36,7 +32,6 @@ public class InvalidCustomerRequestArguments {
                 Arguments.arguments("invalidNullObjectRiskQuestionsRequest", invalidNullObjectRiskQuestionsRequest(), FIELD_RISK_QUESTIONS_EMPTY),
                 Arguments.arguments("invalidLengthRiskQuestionsRequest", invalidLengthRiskQuestionsRequest(), FIELD_RISK_QUESTIONS_INVALID_LENGTH),
                 Arguments.arguments("invalidAnswerValueRiskQuestionsRequest", invalidAnswerValueRiskQuestionsRequest(), FIELD_RISK_QUESTIONS_INVALID_VALUE),
-                Arguments.arguments("invalidNullObjectVehicleRequest", invalidNullObjectVehicleRequest(), FIELD_VEHICLE_EMPTY),
                 Arguments.arguments("invalidNullYearVehicleRequest", invalidNullYearVehicleRequest(), FIELD_VEHICLE_INVALID),
                 Arguments.arguments("invalidYearVehicleRequest", invalidYearVehicleRequest(), FIELD_VEHICLE_INVALID),
                 Arguments.arguments("invalidYearBiggerCurrentYearPlusTwoVehicleRequest", invalidYearBiggerCurrentYearPlusTwoVehicleRequest(), FIELD_VEHICLE_INVALID)
@@ -53,16 +48,6 @@ public class InvalidCustomerRequestArguments {
 
     private static CustomerDataApiRequest invalidDependentsRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest().dependants(null).build();
-    }
-
-    private static CustomerDataApiRequest invalidNullObjectHouseRequest() {
-        return CustomerDataApiRequestTestBuilder.aCustomerDataRequest().house(null).build();
-    }
-
-    private static CustomerDataApiRequest invalidEmptyHouseRequest() {
-        return CustomerDataApiRequestTestBuilder.aCustomerDataRequest()
-                .house(CustomerHouseApiRequestTestBuilder.anEmptyHouseStatusRequest().build())
-                .build();
     }
 
     private static CustomerDataApiRequest invalidDifferentStatusHouseRequest() {
@@ -98,10 +83,6 @@ public class InvalidCustomerRequestArguments {
 
     private static CustomerDataApiRequest invalidAnswerValueRiskQuestionsRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest().riskQuestions(new Integer[]{0, 1, 2}).build();
-    }
-
-    private static CustomerDataApiRequest invalidNullObjectVehicleRequest() {
-        return CustomerDataApiRequestTestBuilder.aCustomerDataRequest().vehicle(null).build();
     }
 
     private static CustomerDataApiRequest invalidNullYearVehicleRequest() {

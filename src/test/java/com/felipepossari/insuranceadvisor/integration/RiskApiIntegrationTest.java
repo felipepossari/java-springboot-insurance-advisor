@@ -53,7 +53,7 @@ class RiskApiIntegrationTest {
     }
 
     @ParameterizedTest(name = "{index} {0}")
-    @MethodSource(value = "com.felipepossari.insuranceadvisor.base.request.InvalidCustomerRequestTestBuilder#invalidCustomerRequests")
+    @MethodSource(value = "com.felipepossari.insuranceadvisor.base.request.InvalidCustomerRequestArguments#invalidCustomerRequests")
     void postRiskShouldReturnBadRequestIfRequestIsValid(String testName, CustomerDataApiRequest request,
                                                         RiskApiErrorReason errorReason) throws Exception {
         MvcResult mvcResult = mockMvc.perform(
