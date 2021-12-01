@@ -1,4 +1,4 @@
-package com.felipepossari.insuranceadvisor.application.domain;
+package com.felipepossari.insuranceadvisor.application.domain.customer;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +12,13 @@ public class Customer {
     private int income;
     private MaritalStatus maritalStatus;
     private int baseScore;
-    private int vehicleYear;
+    private Integer vehicleYear;
+
+    public boolean hasIncome(){
+        return income > 0;
+    }
+
+    public boolean hasVehicle(){
+        return true;
+    }
 }
