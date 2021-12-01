@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.felipepossari.insuranceadvisor.adapter.AdapterConstants.ENDPOINT_RISKS;
+
 @RestController
-@RequestMapping(path = "/risks")
+@RequestMapping(path = ENDPOINT_RISKS)
 @RequiredArgsConstructor
 public class RiskController {
 
