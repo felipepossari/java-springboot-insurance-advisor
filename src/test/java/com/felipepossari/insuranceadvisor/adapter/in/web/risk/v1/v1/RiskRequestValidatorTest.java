@@ -1,4 +1,4 @@
-package com.felipepossari.insuranceadvisor.base.adapter.in.web.risk.v1;
+package com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.v1;
 
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.RiskRequestValidator;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason;
