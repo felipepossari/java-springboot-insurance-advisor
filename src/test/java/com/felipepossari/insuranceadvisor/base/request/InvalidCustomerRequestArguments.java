@@ -1,9 +1,6 @@
 package com.felipepossari.insuranceadvisor.base.request;
 
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerDataApiRequest;
-import com.felipepossari.insuranceadvisor.base.request.CustomerDataApiRequestTestBuilder;
-import com.felipepossari.insuranceadvisor.base.request.CustomerHouseApiRequestTestBuilder;
-import com.felipepossari.insuranceadvisor.base.request.CustomerVehicleApiRequestTestBuilder;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDateTime;
@@ -23,10 +20,10 @@ import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exceptio
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_VEHICLE_INVALID;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.MARITAL_STATUS_INVALID;
 
-public class InvalidCustomerRequestTestBuilder {
+public class InvalidCustomerRequestArguments {
     public static Stream<Arguments> invalidCustomerRequests() {
         return Stream.of(
-                Arguments.arguments("invalidAgeRequest",invalidAgeRequest(), FIELD_AGE_INVALID),
+                Arguments.arguments("invalidAgeRequest", invalidAgeRequest(), FIELD_AGE_INVALID),
                 Arguments.arguments("invalidNullAgeRequest", invalidNullAgeRequest(), FIELD_AGE_INVALID),
                 Arguments.arguments("invalidDependentsRequest", invalidDependentsRequest(), FIELD_DEPENDENTS_INVALID),
                 Arguments.arguments("invalidNullObjectHouseRequest", invalidNullObjectHouseRequest(), FIELD_HOUSE_EMPTY),
