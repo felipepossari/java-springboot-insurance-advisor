@@ -95,7 +95,7 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateDependents(Errors errors, CustomerDataApiRequest request) {
-        if (ObjectUtils.isEmpty(request.getDependants()) || request.getDependants() < 0) {
+        if (ObjectUtils.isEmpty(request.getDependents()) || request.getDependents() < 0) {
             errors.reject(FIELD_DEPENDENTS_INVALID.getCode(), FIELD_DEPENDENTS_INVALID.getMessage());
         }
     }

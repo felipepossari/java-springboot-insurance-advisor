@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class CustomerDataApiRequest {
     private Integer age;
-    private Integer dependants;
+    private Integer dependents;
     private CustomerHouseApiRequest house;
     private Integer income;
     private String maritalStatus;

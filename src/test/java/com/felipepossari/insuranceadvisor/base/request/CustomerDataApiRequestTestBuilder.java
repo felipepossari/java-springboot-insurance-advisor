@@ -65,7 +65,7 @@ public class CustomerDataApiRequestTestBuilder {
     public CustomerDataApiRequest build() {
         return CustomerDataApiRequest.builder()
                 .age(age)
-                .dependants(dependants)
+                .dependents(dependants)
                 .house(house)
                 .income(income)
                 .maritalStatus(maritalStatus)
