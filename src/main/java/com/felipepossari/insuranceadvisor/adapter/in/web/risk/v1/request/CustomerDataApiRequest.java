@@ -12,5 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomerDataApiRequest {
-    private String name;
+    private Integer age;
+    private Integer dependants;
+    private CustomerHouseApiRequest house;
+    private Integer income;
+    private String maritalStatus;
+    private Integer[] riskQuestions;
+    private CustomerVehicleApiRequest vehicle;
 }
