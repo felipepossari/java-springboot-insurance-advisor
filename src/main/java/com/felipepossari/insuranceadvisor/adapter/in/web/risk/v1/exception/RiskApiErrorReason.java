@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum RiskApiErrorReason {
 
+    REQUEST_BODY_PARSE_FAIL("R00", "Failure to parse request body"),
     FIELD_AGE_INVALID("R001","Age numbmer invalid"),
     FIELD_DEPENDENTS_INVALID("R002","Dependents number invalid"),
     FIELD_HOUSE_EMPTY("R003","House cannot be null or empty"),
