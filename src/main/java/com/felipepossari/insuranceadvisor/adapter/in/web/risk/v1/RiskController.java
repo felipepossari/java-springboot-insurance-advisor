@@ -3,6 +3,7 @@ package com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.InvalidRequestException;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerDataApiRequest;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.response.RiskProfileApiResponse;
+import com.felipepossari.insuranceadvisor.application.port.in.CalculateRiskProfileUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,12 +24,16 @@ import static com.felipepossari.insuranceadvisor.adapter.AdapterConstants.ENDPOI
 public class RiskController {
 
     private final RiskRequestValidator riskRequestValidator;
+    private final RiskBuilder builder;
+    private final CalculateRiskProfileUseCase useCase;
 
     @PostMapping
     public ResponseEntity<RiskProfileApiResponse> postRisk(
             @Valid @RequestBody CustomerDataApiRequest customerDataApiRequest,
             BindingResult bindingResult) {
         checkRequest(bindingResult);
+        var customer = builder.buildCustomer(customerDataApiRequest);
+        var riskProfile = useCase.calculate(customer);
         return ResponseEntity.ok(RiskProfileApiResponse.builder().name("a").build());
     }
 
