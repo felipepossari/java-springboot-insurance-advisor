@@ -7,7 +7,7 @@ import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.Custome
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.AGE;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.DEPENDENTS;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.INCOME;
-import static com.felipepossari.insuranceadvisor.base.DefaultConstants.MARITAL_STATUS;
+import static com.felipepossari.insuranceadvisor.base.DefaultConstants.MARITAL_STATUS_MARRIED;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.RISK_QUESTIONS;
 
 public class CustomerDataApiRequestTestBuilder {
@@ -16,14 +16,18 @@ public class CustomerDataApiRequestTestBuilder {
     private Integer dependants = DEPENDENTS;
     private CustomerHouseApiRequest house = CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build();
     private Integer income = INCOME;
-    private String maritalStatus = MARITAL_STATUS;
+    private String maritalStatus = MARITAL_STATUS_MARRIED;
     private Integer[] riskQuestions = RISK_QUESTIONS;
     private CustomerVehicleApiRequest vehicle = CustomerVehicleApiRequestTestBuilder.aVehicleRequest().build();
 
-    public CustomerDataApiRequestTestBuilder() {
+    private CustomerDataApiRequestTestBuilder() {
     }
 
-    public CustomerDataApiRequestTestBuilder ae(Integer age) {
+    public static CustomerDataApiRequestTestBuilder aCustomerDataRequest(){
+        return new CustomerDataApiRequestTestBuilder();
+    }
+
+    public CustomerDataApiRequestTestBuilder age(Integer age) {
         this.age = age;
         return this;
     }
