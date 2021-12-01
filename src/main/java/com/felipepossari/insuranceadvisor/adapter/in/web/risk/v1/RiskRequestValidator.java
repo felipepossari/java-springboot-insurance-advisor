@@ -54,9 +54,8 @@ public class RiskRequestValidator implements Validator {
     private void validateVehicle(Errors errors, CustomerDataApiRequest request) {
         if (ObjectUtils.isEmpty(request.getVehicle())) {
             errors.reject(FIELD_VEHICLE_EMPTY.getCode(), FIELD_VEHICLE_EMPTY.getMessage());
-        } else if (ObjectUtils.isEmpty(request.getVehicle())
-                || ObjectUtils.isEmpty(request.getVehicle().getYear())
-                || (request.getVehicle().getYear() < 0 && request.getVehicle().getYear() >
+        } else if (ObjectUtils.isEmpty(request.getVehicle().getYear())
+                || (request.getVehicle().getYear() < 0 || request.getVehicle().getYear() >
                 LocalDateTime.now().getYear() + 1)) {
             errors.reject(FIELD_VEHICLE_INVALID.getCode(), FIELD_VEHICLE_INVALID.getMessage());
         }
@@ -74,9 +73,9 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateMaritalStatus(Errors errors, CustomerDataApiRequest request) {
-        if (!StringUtils.isEmpty(request.getMaritalStatus())) {
+        if (StringUtils.isEmpty(request.getMaritalStatus())) {
             errors.reject(FIELD_MARITAL_STATUS_EMPTY.getCode(), FIELD_MARITAL_STATUS_EMPTY.getMessage());
-        } else if (EnumUtils.isValidEnum(MaritalStatus.class, request.getMaritalStatus())) {
+        } else if (!EnumUtils.isValidEnum(MaritalStatus.class, request.getMaritalStatus().toUpperCase())) {
             errors.reject(FIELD_MARITAL_STATUS_INVALID.getCode(), FIELD_MARITAL_STATUS_INVALID.getMessage());
         }
     }
@@ -88,10 +87,9 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateHouse(Errors errors, CustomerDataApiRequest request) {
-        if (ObjectUtils.isEmpty(request.getHouse())) {
+        if (ObjectUtils.isEmpty(request.getHouse()) || StringUtils.isEmpty(request.getHouse().getOwnershipStatus())) {
             errors.reject(FIELD_HOUSE_EMPTY.getCode(), FIELD_HOUSE_EMPTY.getMessage());
-        } else if (!StringUtils.isEmpty(request.getHouse().getOwnershipStatus())
-                || EnumUtils.isValidEnum(House.class, request.getHouse().getOwnershipStatus())) {
+        } else if (!EnumUtils.isValidEnum(House.class, request.getHouse().getOwnershipStatus().toUpperCase())) {
             errors.reject(FIELD_HOUSE_INVALID.getCode(), FIELD_HOUSE_INVALID.getMessage());
         }
     }
