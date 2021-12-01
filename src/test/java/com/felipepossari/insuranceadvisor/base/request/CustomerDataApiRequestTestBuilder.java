@@ -27,6 +27,10 @@ public class CustomerDataApiRequestTestBuilder {
         return new CustomerDataApiRequestTestBuilder();
     }
 
+    public static CustomerDataApiRequestTestBuilder anInvalidCustomerDataRequest(){
+        return new CustomerDataApiRequestTestBuilder().age(-1);
+    }
+
     public CustomerDataApiRequestTestBuilder age(Integer age) {
         this.age = age;
         return this;
