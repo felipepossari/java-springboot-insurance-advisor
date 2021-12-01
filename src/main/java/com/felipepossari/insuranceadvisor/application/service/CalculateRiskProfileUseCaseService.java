@@ -3,6 +3,7 @@ package com.felipepossari.insuranceadvisor.application.service;
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
+import com.felipepossari.insuranceadvisor.application.domain.rule.AgeOverSixtyRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.IncomeVehicleHouseEligibilityRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.Rule;
 import com.felipepossari.insuranceadvisor.application.port.in.CalculateRiskProfileUseCase;
@@ -28,13 +29,13 @@ public class CalculateRiskProfileUseCaseService implements CalculateRiskProfileU
 
     private List<Rule>  buildRuleList() {
         return List.of(
-                new IncomeVehicleHouseEligibilityRule()
+                new IncomeVehicleHouseEligibilityRule(),
+                new AgeOverSixtyRule()
         );
     }
 
     private EnumMap<InsuranceType, Insurance> fillInsurancesScore(Customer customer) {
         EnumMap<InsuranceType, Insurance> insurances = new EnumMap<>(InsuranceType.class);
-
         Stream.of(InsuranceType.values()).forEach(i ->
                 insurances.put(i, new Insurance(i, customer.getBaseScore()))
         );

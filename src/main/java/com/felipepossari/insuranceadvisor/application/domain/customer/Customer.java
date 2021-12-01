@@ -25,4 +25,8 @@ public class Customer {
     public boolean hasHouse(){
         return house != null;
     }
+
+    public boolean hasMoreSixtyYears() {
+        return age > 60;
+    }
 }
