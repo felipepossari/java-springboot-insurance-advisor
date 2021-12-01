@@ -19,6 +19,10 @@ public class Customer {
     }
 
     public boolean hasVehicle(){
-        return true;
+        return vehicleYear != null;
+    }
+
+    public boolean hasHouse(){
+        return house != null;
     }
 }
