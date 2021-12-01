@@ -1,6 +1,5 @@
 package com.felipepossari.insuranceadvisor.application.domain.rule;
 
-import com.felipepossari.insuranceadvisor.application.domain.ScoreResult;
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
@@ -12,6 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.EnumMap;
+
+import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.INELIGIBLE;
+import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.RESPONSIBLE;
+import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.AUTO;
+import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.DISABILITY;
+import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.HOME;
+import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.LIFE;
 
 @ExtendWith(MockitoExtension.class)
 class IncomeVehicleHouseEligibilityRuleTest {
@@ -25,9 +31,10 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertNotEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.DISABILITY).getScoreResult());
-        Assertions.assertNotEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.AUTO).getScoreResult());
-        Assertions.assertNotEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.HOME).getScoreResult());
+        Assertions.assertNotEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertNotEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertNotEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertNotEquals(INELIGIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
@@ -37,9 +44,10 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.DISABILITY).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.AUTO).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.HOME).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
@@ -49,9 +57,10 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.DISABILITY).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.AUTO).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.HOME).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
@@ -61,8 +70,9 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.DISABILITY).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.AUTO).getScoreResult());
-        Assertions.assertEquals(ScoreResult.INELIGIBLE, insurances.get(InsuranceType.HOME).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 }
