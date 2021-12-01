@@ -8,5 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RiskProfileApiResponse {
-    private String name;
+    private String auto;
+    private String disability;
+    private String home;
+    private String life;
 }
