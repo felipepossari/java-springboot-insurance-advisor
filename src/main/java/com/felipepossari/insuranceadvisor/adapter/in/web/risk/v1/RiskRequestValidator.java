@@ -1,8 +1,8 @@
 package com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1;
 
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerDataApiRequest;
-import com.felipepossari.insuranceadvisor.application.domain.House;
-import com.felipepossari.insuranceadvisor.application.domain.MaritalStatus;
+import com.felipepossari.insuranceadvisor.application.domain.customer.House;
+import com.felipepossari.insuranceadvisor.application.domain.customer.MaritalStatus;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_AGE_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_DEPENDENTS_INVALID;
-import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_HOUSE_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_HOUSE_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_INCOME_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_MARITAL_STATUS_EMPTY;
@@ -23,7 +22,6 @@ import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exceptio
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_INVALID_LENGTH;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_RISK_QUESTIONS_INVALID_VALUE;
-import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_VEHICLE_EMPTY;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_VEHICLE_INVALID;
 
 @Component
@@ -52,11 +50,10 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateVehicle(Errors errors, CustomerDataApiRequest request) {
-        if (ObjectUtils.isEmpty(request.getVehicle())) {
-            errors.reject(FIELD_VEHICLE_EMPTY.getCode(), FIELD_VEHICLE_EMPTY.getMessage());
-        } else if (ObjectUtils.isEmpty(request.getVehicle().getYear())
-                || (request.getVehicle().getYear() < 0 || request.getVehicle().getYear() >
-                LocalDateTime.now().getYear() + 1)) {
+        if (!ObjectUtils.isEmpty(request.getVehicle())
+                && (ObjectUtils.isEmpty(request.getVehicle().getYear())
+                || (request.getVehicle().getYear() < 0
+                || request.getVehicle().getYear() > LocalDateTime.now().getYear() + 1))) {
             errors.reject(FIELD_VEHICLE_INVALID.getCode(), FIELD_VEHICLE_INVALID.getMessage());
         }
     }
@@ -87,9 +84,8 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateHouse(Errors errors, CustomerDataApiRequest request) {
-        if (ObjectUtils.isEmpty(request.getHouse()) || StringUtils.isEmpty(request.getHouse().getOwnershipStatus())) {
-            errors.reject(FIELD_HOUSE_EMPTY.getCode(), FIELD_HOUSE_EMPTY.getMessage());
-        } else if (!EnumUtils.isValidEnum(House.class, request.getHouse().getOwnershipStatus().toUpperCase())) {
+        if (!ObjectUtils.isEmpty(request.getHouse())
+                && !EnumUtils.isValidEnum(House.class, request.getHouse().getOwnershipStatus().toUpperCase())) {
             errors.reject(FIELD_HOUSE_INVALID.getCode(), FIELD_HOUSE_INVALID.getMessage());
         }
     }
