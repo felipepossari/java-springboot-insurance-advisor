@@ -29,4 +29,12 @@ public class Customer {
     public boolean hasMoreSixtyYears() {
         return age > 60;
     }
+
+    public boolean hasBetweenThirtyAndFortyYears() {
+        return age >= 30 && age <= 40;
+    }
+
+    public boolean hasLessThirtyYears() {
+        return age < 30;
+    }
 }
