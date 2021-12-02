@@ -1,4 +1,4 @@
-package com.felipepossari.insuranceadvisor.application.domain.rule;
+package com.felipepossari.insuranceadvisor.unit.application.domain.rule;
 
 import com.felipepossari.insuranceadvisor.application.domain.RiskScore;
 import com.felipepossari.insuranceadvisor.application.domain.ScoreResult;

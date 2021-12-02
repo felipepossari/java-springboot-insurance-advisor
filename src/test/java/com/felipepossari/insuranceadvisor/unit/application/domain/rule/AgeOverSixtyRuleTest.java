@@ -1,8 +1,9 @@
-package com.felipepossari.insuranceadvisor.application.domain.rule;
+package com.felipepossari.insuranceadvisor.unit.application.domain.rule;
 
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
+import com.felipepossari.insuranceadvisor.application.domain.rule.AgeOverSixtyRule;
 import com.felipepossari.insuranceadvisor.base.domain.CustomerTestBuilder;
 import com.felipepossari.insuranceadvisor.base.domain.EnumMapInsurancesTestBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -20,33 +21,15 @@ import static com.felipepossari.insuranceadvisor.application.domain.insurance.In
 import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.LIFE;
 
 @ExtendWith(MockitoExtension.class)
-class IncomeVehicleHouseEligibilityRuleTest {
+class AgeOverSixtyRuleTest {
 
-    private final IncomeVehicleHouseEligibilityRule rule = new IncomeVehicleHouseEligibilityRule();
-
-    @Test
-    void applyShouldDoNothingIsCustomerHasIncomeVehicleHouse() {
-        Customer customer = CustomerTestBuilder.aCustomer()
-                .baseScore(3)
-                .build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
-                .anInsuranceList()
-                .customer(customer)
-                .build();
-
-        rule.apply(customer, insurances);
-
-        Assertions.assertNotEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertNotEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
-        Assertions.assertNotEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
-        Assertions.assertNotEquals(INELIGIBLE, insurances.get(LIFE).getScoreResult());
-    }
+    private final AgeOverSixtyRule rule = new AgeOverSixtyRule();
 
     @Test
-    void applyShouldMakeDisabilityIneligiblyWhenCustomerHasNoIncome() {
+    void applyShouldMakeInsurancesIneligiblyWhenCustomerIsOverThanSixtyYears() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
-                .income(0)
+                .age(61)
                 .build();
 
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
@@ -59,45 +42,23 @@ class IncomeVehicleHouseEligibilityRuleTest {
         Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(HOME).getScoreResult());
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
+        Assertions.assertEquals(INELIGIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
-    void applyShouldMakeHomeIneligiblyWhenCustomerHasNoHouse() {
+    void applyShouldMakeInsurancesIneligiblyWhenCustomerIsUnderThanSixtyYears() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
-                .house(null)
+                .age(60)
                 .build();
-
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
-                .customer(customer)
                 .build();
 
         rule.apply(customer, insurances);
 
         Assertions.assertEquals(RESPONSIBLE, insurances.get(DISABILITY).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
-    }
-
-    @Test
-    void applyShouldMakeAutoIneligiblyWhenCustomerHasNoVehicle() {
-        Customer customer = CustomerTestBuilder.aCustomer()
-                .baseScore(3)
-                .vehicle(null)
-                .build();
-
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
-                .anInsuranceList()
-                .customer(customer)
-                .build();
-
-        rule.apply(customer, insurances);
-
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(HOME).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }

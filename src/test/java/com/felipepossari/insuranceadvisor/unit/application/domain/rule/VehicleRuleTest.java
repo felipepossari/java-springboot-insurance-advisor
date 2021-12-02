@@ -1,16 +1,21 @@
-package com.felipepossari.insuranceadvisor.application.domain.rule;
+package com.felipepossari.insuranceadvisor.unit.application.domain.rule;
 
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
+import com.felipepossari.insuranceadvisor.application.domain.rule.VehicleRule;
+import com.felipepossari.insuranceadvisor.application.helper.date.DateTime;
 import com.felipepossari.insuranceadvisor.base.domain.CustomerTestBuilder;
 import com.felipepossari.insuranceadvisor.base.domain.EnumMapInsurancesTestBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.EnumMap;
 
 import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.REGULAR;
@@ -19,24 +24,54 @@ import static com.felipepossari.insuranceadvisor.application.domain.insurance.In
 import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.DISABILITY;
 import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.HOME;
 import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.LIFE;
+import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class IncomeRuleTest {
+class VehicleRuleTest {
 
-    private final IncomeRule rule = new IncomeRule();
+    @Mock
+    private DateTime dateTime;
+
+    @InjectMocks
+    private VehicleRule rule;
 
     @ParameterizedTest
-    @ValueSource(ints = {200000, 300000})
-    void applyShouldDeductRiskPointWhenUserIncomeIsBiggerThanTwoHundredK(int income) {
+    @ValueSource(ints = {-1, 0, 1, 2, 3, 4, 5})
+    void applyShouldAddRiskPointAutoWhenUserHasNewCar(int year) {
         Customer customer = CustomerTestBuilder.aCustomer()
-                .baseScore(3)
-                .income(income)
+                .vehicle(LocalDateTime.now().getYear() - year)
+                .baseScore(2)
                 .build();
 
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)
                 .build();
+
+        given(dateTime.getCurrentDate()).willReturn(LocalDateTime.now());
+
+        rule.apply(customer, insurances);
+
+        Assertions.assertEquals(REGULAR, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(LIFE).getScoreResult());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {6, 10, 15})
+    void applyShouldADoNothingWhenUserHasOldCar(int year) {
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .vehicle(LocalDateTime.now().getYear() - year)
+                .baseScore(2)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
+
+        given(dateTime.getCurrentDate()).willReturn(LocalDateTime.now());
 
         rule.apply(customer, insurances);
 
@@ -46,24 +81,4 @@ class IncomeRuleTest {
         Assertions.assertEquals(REGULAR, insurances.get(LIFE).getScoreResult());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {0, 199999})
-    void applyShouldDoNothingWhenUserIncomeIsLowerThanTwoHundredK(int income) {
-        Customer customer = CustomerTestBuilder.aCustomer()
-                .baseScore(3)
-                .income(income)
-                .build();
-
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
-                .anInsuranceList()
-                .customer(customer)
-                .build();
-
-        rule.apply(customer, insurances);
-
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(HOME).getScoreResult());
-        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
-    }
 }

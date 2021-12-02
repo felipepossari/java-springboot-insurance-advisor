@@ -1,8 +1,9 @@
-package com.felipepossari.insuranceadvisor.application.domain.rule;
+package com.felipepossari.insuranceadvisor.unit.application.domain.rule;
 
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
+import com.felipepossari.insuranceadvisor.application.domain.rule.DependentRule;
 import com.felipepossari.insuranceadvisor.base.domain.CustomerTestBuilder;
 import com.felipepossari.insuranceadvisor.base.domain.EnumMapInsurancesTestBuilder;
 import org.junit.jupiter.api.Assertions;

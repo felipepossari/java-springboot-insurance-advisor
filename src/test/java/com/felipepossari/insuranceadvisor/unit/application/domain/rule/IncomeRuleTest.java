@@ -1,12 +1,12 @@
-package com.felipepossari.insuranceadvisor.application.domain.rule;
+package com.felipepossari.insuranceadvisor.unit.application.domain.rule;
 
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
+import com.felipepossari.insuranceadvisor.application.domain.rule.IncomeRule;
 import com.felipepossari.insuranceadvisor.base.domain.CustomerTestBuilder;
 import com.felipepossari.insuranceadvisor.base.domain.EnumMapInsurancesTestBuilder;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,16 +22,16 @@ import static com.felipepossari.insuranceadvisor.application.domain.insurance.In
 import static com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType.LIFE;
 
 @ExtendWith(MockitoExtension.class)
-class AgeUnderFortyRuleTest {
+class IncomeRuleTest {
 
-    private final AgeUnderFortyRule rule = new AgeUnderFortyRule();
+    private final IncomeRule rule = new IncomeRule();
 
     @ParameterizedTest
-    @ValueSource(ints = {10,20,29})
-    void applyShouldDeductTwoRiskPointsWhenUserIsUnderThirtyYears(int age){
+    @ValueSource(ints = {200000, 300000})
+    void applyShouldDeductRiskPointWhenUserIncomeIsBiggerThanTwoHundredK(int income) {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
-                .age(age)
+                .income(income)
                 .build();
 
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
@@ -48,31 +48,17 @@ class AgeUnderFortyRuleTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {30,35,40})
-    void applyShouldDeductOneRiskPointWhenUserHasBetweenThirtyFortyYears(int age){
+    @ValueSource(ints = {0, 199999})
+    void applyShouldDoNothingWhenUserIncomeIsLowerThanTwoHundredK(int income) {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
-                .age(age)
+                .income(income)
                 .build();
 
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)
                 .build();
-
-        rule.apply(customer, insurances);
-
-        Assertions.assertEquals(REGULAR, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertEquals(REGULAR, insurances.get(AUTO).getScoreResult());
-        Assertions.assertEquals(REGULAR, insurances.get(HOME).getScoreResult());
-        Assertions.assertEquals(REGULAR, insurances.get(LIFE).getScoreResult());
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {41})
-    void applyShouldDoNothingWhenUserIsOverFortyYears(int age){
-        Customer customer = CustomerTestBuilder.aCustomer().age(age).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
 
         rule.apply(customer, insurances);
 
