@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "3151139d-0650-4242-8fb7-9ad1bd0afcd6",
+		"name": "Risks API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Calculate Risk Profile",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"age\": 35,\n  \"dependents\": 2,\n  \"house\": {\"ownership_status\": \"owned\"},\n  \"income\": 0,\n  \"marital_status\": \"married\",\n  \"risk_questions\": [0, 1, 0],\n  \"vehicle\": {\"year\": 2018}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/risks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"risks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
