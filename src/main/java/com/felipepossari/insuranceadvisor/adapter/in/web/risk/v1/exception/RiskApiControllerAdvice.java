@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.REQUEST_BODY_PARSE_FAIL;
+import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.UNKNOWN_ERROR;
 
 @ControllerAdvice
 public class RiskApiControllerAdvice {
@@ -32,6 +33,18 @@ public class RiskApiControllerAdvice {
                         ErrorResponse.builder()
                                 .code(REQUEST_BODY_PARSE_FAIL.getCode())
                                 .message(REQUEST_BODY_PARSE_FAIL.getMessage())
+                                .build())
+                );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<List<ErrorResponse>> handleUnknownError(Exception ex, WebRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(List.of(
+                        ErrorResponse.builder()
+                                .code(UNKNOWN_ERROR.getCode())
+                                .message(UNKNOWN_ERROR.getMessage())
                                 .build())
                 );
     }

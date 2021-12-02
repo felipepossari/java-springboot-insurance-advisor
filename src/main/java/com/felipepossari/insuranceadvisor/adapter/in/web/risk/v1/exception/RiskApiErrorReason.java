@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum RiskApiErrorReason {
 
-    REQUEST_BODY_PARSE_FAIL("R00", "Failure to parse request body"),
+    REQUEST_BODY_PARSE_FAIL("R000", "Failure to parse request body"),
     FIELD_AGE_INVALID("R001","Age numbmer invalid"),
     FIELD_DEPENDENTS_INVALID("R002","Dependents number invalid"),
     FIELD_HOUSE_INVALID("R003","House value invalid. It must be owned or mortgaged"),
@@ -17,7 +17,8 @@ public enum RiskApiErrorReason {
     FIELD_RISK_QUESTIONS_EMPTY("R007","Risk questions cannot be null or empty"),
     FIELD_RISK_QUESTIONS_INVALID_LENGTH("R008","Risk questions must have three answers"),
     FIELD_RISK_QUESTIONS_INVALID_VALUE("R009","Risk questions values invalid. They must be zero or one"),
-    FIELD_VEHICLE_INVALID("R010","Vehicle year value invalid");
+    FIELD_VEHICLE_INVALID("R010","Vehicle year value invalid"),
+    UNKNOWN_ERROR("R999","An unknown error happened");
 
     private String code;
     private String message;
