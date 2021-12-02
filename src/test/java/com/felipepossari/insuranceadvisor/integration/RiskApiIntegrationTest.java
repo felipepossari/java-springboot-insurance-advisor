@@ -7,7 +7,6 @@ import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskA
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.model.ErrorResponse;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerDataApiRequest;
 import com.felipepossari.insuranceadvisor.base.request.CustomerDataApiRequestTestBuilder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
