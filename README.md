@@ -18,7 +18,7 @@ In order to run this project you have to install:
 - [Maven](https://maven.apache.org/download.cgi);
 - [Postman](https://www.postman.com/downloads/);
 
-Once everything installed you can follow the next steps.
+With everything installed you can follow the next steps.
 
 ## How to run
 
@@ -29,7 +29,6 @@ mvn exec:java
 ```
 
 ## API Documentation
-
 ### Entities
 * Customer Request:
 ```
