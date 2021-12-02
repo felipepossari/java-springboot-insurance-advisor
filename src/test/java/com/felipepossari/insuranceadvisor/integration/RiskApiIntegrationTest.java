@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,6 +32,7 @@ import static com.felipepossari.insuranceadvisor.adapter.AdapterConstants.ENDPOI
 import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.ECONOMIC;
 import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.INELIGIBLE;
 import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.REGULAR;
+import static com.felipepossari.insuranceadvisor.application.domain.ScoreResult.RESPONSIBLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -43,10 +45,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 class RiskApiIntegrationTest {
 
     @Autowired
-    private ObjectMapper om;
+    ObjectMapper om;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @ParameterizedTest
     @MethodSource(value = "validCustomerRequestResponse")
@@ -103,7 +105,8 @@ class RiskApiIntegrationTest {
                                 .income(0)
                                 .maritalStatus(MaritalStatus.MARRIED.name())
                                 .riskQuestions(new Integer[]{0, 1, 0})
-                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest().year(2018).build())
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear() - 1).build())
                                 .build()
                         ,
                         RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
@@ -111,6 +114,105 @@ class RiskApiIntegrationTest {
                                 .disability(INELIGIBLE)
                                 .home(ECONOMIC)
                                 .life(REGULAR)
+                                .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(35)
+                                .dependants(2)
+                                .house(CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build())
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.MARRIED.name())
+                                .riskQuestions(new Integer[]{0, 1, 0})
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear() - 2).build())
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(REGULAR)
+                                .disability(ECONOMIC)
+                                .home(ECONOMIC)
+                                .life(REGULAR)
+                                .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(60)
+                                .dependants(2)
+                                .house(CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build())
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.MARRIED.name())
+                                .riskQuestions(new Integer[]{0, 1, 0})
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear() - 3).build())
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(REGULAR)
+                                .disability(REGULAR)
+                                .home(REGULAR)
+                                .life(RESPONSIBLE)
+                                .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(60)
+                                .dependants(2)
+                                .house(null)
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.MARRIED.name())
+                                .riskQuestions(new Integer[]{1, 1, 0})
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear() - 4).build())
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(RESPONSIBLE)
+                                .disability(REGULAR)
+                                .home(INELIGIBLE)
+                                .life(RESPONSIBLE)
+                                .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(50)
+                                .dependants(2)
+                                .house(CustomerHouseApiRequestTestBuilder.aMortgagedHouseRequest().build())
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.MARRIED.name())
+                                .riskQuestions(new Integer[]{0, 1, 0})
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear()).build())
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(REGULAR)
+                                .disability(REGULAR)
+                                .home(REGULAR)
+                                .life(RESPONSIBLE)
+                                .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(20)
+                                .dependants(0)
+                                .house(null)
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.SINGLE.name())
+                                .riskQuestions(new Integer[]{0, 1, 0})
+                                .vehicle(null)
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(INELIGIBLE)
+                                .disability(ECONOMIC)
+                                .home(INELIGIBLE)
+                                .life(ECONOMIC)
                                 .build()
                 )
         );

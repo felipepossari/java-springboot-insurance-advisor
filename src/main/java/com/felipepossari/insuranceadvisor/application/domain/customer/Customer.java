@@ -55,6 +55,6 @@ public class Customer {
     }
 
     public boolean hasNewVehicle(int currentYear) {
-        return currentYear - vehicleYear <= 5;
+        return hasVehicle() && currentYear - vehicleYear <= 5;
     }
 }
