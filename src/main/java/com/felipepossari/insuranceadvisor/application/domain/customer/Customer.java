@@ -37,4 +37,8 @@ public class Customer {
     public boolean hasLessThirtyYears() {
         return age < 30;
     }
+
+    public boolean isIncomeBiggerTwoHundreadK() {
+        return income >= 200000;
+    }
 }
