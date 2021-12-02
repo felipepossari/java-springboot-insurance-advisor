@@ -146,9 +146,9 @@ Note: You can also run the collection `Risks API.postman_collection.json` locate
             └── com
                 └── felipepossari
                     └── insuranceadvisor
-                        ├── base                # Classes used by the tests. E.g.: Test builders and default constants
-                        ├── integration         # Integration test classes
-                        └── unit                # Unit test classes
+                        ├── base                  # Classes used by the tests. E.g.: Test builders and default constants
+                        ├── integration           # Integration test classes
+                        └── unit                  # Unit test classes
 
 ```
 
