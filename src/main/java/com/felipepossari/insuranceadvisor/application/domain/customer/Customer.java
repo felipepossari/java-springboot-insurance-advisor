@@ -45,4 +45,8 @@ public class Customer {
     public boolean hasMortGagedHouse() {
         return House.MORTGAGED.equals(this.house);
     }
+
+    public boolean hasDependents() {
+        return dependents > 0;
+    }
 }
