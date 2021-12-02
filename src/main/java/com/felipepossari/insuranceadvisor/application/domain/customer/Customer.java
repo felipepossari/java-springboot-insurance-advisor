@@ -43,10 +43,14 @@ public class Customer {
     }
 
     public boolean hasMortGagedHouse() {
-        return House.MORTGAGED.equals(this.house);
+        return House.MORTGAGED.equals(house);
     }
 
     public boolean hasDependents() {
         return dependents > 0;
+    }
+
+    public boolean isMarried() {
+        return MaritalStatus.MARRIED.equals(maritalStatus);
     }
 }
