@@ -12,9 +12,9 @@ public class DefaultConstants {
     public static final String HOUSE_OWNERSHIP_STATUS_INVALID = "rented";
     public static final Integer INCOME = 200000;
     public static final String MARITAL_STATUS_MARRIED = "married";
-    public static final String MARITAL_STATUS_SINGLE = "single";
     public static final String MARITAL_STATUS_INVALID = "divorced";
     public static final Integer[] RISK_QUESTIONS = new Integer[]{1, 1, 1};
     public static final Integer VEHICLE_YEAR = 2018;
     public static final Integer VEHICLE_YEAR_INVALID = -1;
+    public static final String RESPONSE_API_STATUS = "responsible";
 }
