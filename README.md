@@ -77,10 +77,10 @@ mvn exec:java
 * Error Response:
 ```
 [
-	{
-		"code": "R000",
-		"message": "Error reason"
-	}
+    {
+        "code": "R000",
+        "message": "Error reason"
+    }
 ]
 ```
 
