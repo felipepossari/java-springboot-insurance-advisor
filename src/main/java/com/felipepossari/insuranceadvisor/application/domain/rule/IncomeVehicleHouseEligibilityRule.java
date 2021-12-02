@@ -10,9 +10,15 @@ public class IncomeVehicleHouseEligibilityRule implements Rule {
 
     @Override
     public void apply(Customer customer, EnumMap<InsuranceType, Insurance> insurances) {
-        if (!customer.hasIncome() || !customer.hasVehicle() || !customer.hasHouse()) {
+        if (!customer.hasIncome()) {
             insurances.get(InsuranceType.DISABILITY).makeIneligibly();
+        }
+
+        if (!customer.hasVehicle()) {
             insurances.get(InsuranceType.AUTO).makeIneligibly();
+        }
+
+        if (!customer.hasHouse()) {
             insurances.get(InsuranceType.HOME).makeIneligibly();
         }
     }

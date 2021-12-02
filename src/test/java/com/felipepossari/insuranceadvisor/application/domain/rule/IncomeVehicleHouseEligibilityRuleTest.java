@@ -43,7 +43,7 @@ class IncomeVehicleHouseEligibilityRuleTest {
     }
 
     @Test
-    void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoIncome() {
+    void applyShouldMakeDisabilityIneligiblyWhenCustomerHasNoIncome() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
                 .income(0)
@@ -57,13 +57,13 @@ class IncomeVehicleHouseEligibilityRuleTest {
         rule.apply(customer, insurances);
 
         Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(HOME).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
-    void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoHouse() {
+    void applyShouldMakeHomeIneligiblyWhenCustomerHasNoHouse() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
                 .house(null)
@@ -76,17 +76,18 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(AUTO).getScoreResult());
         Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 
     @Test
-    void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoVehicle() {
+    void applyShouldMakeAutoIneligiblyWhenCustomerHasNoVehicle() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .baseScore(3)
-                .vehicle(null).build();
+                .vehicle(null)
+                .build();
 
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
@@ -95,9 +96,9 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
         rule.apply(customer, insurances);
 
-        Assertions.assertEquals(INELIGIBLE, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(DISABILITY).getScoreResult());
         Assertions.assertEquals(INELIGIBLE, insurances.get(AUTO).getScoreResult());
-        Assertions.assertEquals(INELIGIBLE, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(HOME).getScoreResult());
         Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
     }
 }
