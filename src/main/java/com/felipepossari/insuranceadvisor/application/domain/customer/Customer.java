@@ -14,15 +14,15 @@ public class Customer {
     private int baseScore;
     private Integer vehicleYear;
 
-    public boolean hasIncome(){
+    public boolean hasIncome() {
         return income > 0;
     }
 
-    public boolean hasVehicle(){
+    public boolean hasVehicle() {
         return vehicleYear != null;
     }
 
-    public boolean hasHouse(){
+    public boolean hasHouse() {
         return house != null;
     }
 
@@ -40,5 +40,9 @@ public class Customer {
 
     public boolean isIncomeBiggerTwoHundreadK() {
         return income >= 200000;
+    }
+
+    public boolean hasMortGagedHouse() {
+        return House.MORTGAGED.equals(this.house);
     }
 }
