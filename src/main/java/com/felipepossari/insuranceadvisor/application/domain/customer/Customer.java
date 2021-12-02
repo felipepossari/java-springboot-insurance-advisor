@@ -53,4 +53,8 @@ public class Customer {
     public boolean isMarried() {
         return MaritalStatus.MARRIED.equals(maritalStatus);
     }
+
+    public boolean hasNewVehicle(int currentYear) {
+        return currentYear - vehicleYear <= 5;
+    }
 }
