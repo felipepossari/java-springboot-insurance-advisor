@@ -167,12 +167,30 @@ The `adapter/in` folder has the entrance for the outside world. Inside this fold
 
 The `domain` folder has the classes related with the business like customer, rules and insurance. 
 
-The `helper` folder has an interface to isolate the code that gets the current date time and a factory that returns a list of rules. I choose this approach to avoid static methods in a rule class. This way the class became testable. I isolated the rule creation inside a factory class because it is not responsibility of the use case knows how to create the rules list to be applied in the engine. Once with the rules creation isolated, the use case needs only to get the list of rules and apply then.
+The `helper` folder has an interface to isolate the code that gets the current date time and a factory that returns a list of rules. I chose this approach to avoid static methods in a rule class. This way the class became testable. I isolated the rule creation inside a factory class because it is not responsibility of the use case knows how to create the rules list to be applied in the engine. Once with the rules creation isolated, the use case needs only to get the list of rules and apply then.
 
 The `port` folder has the interfaces used to communicate with external layers. The input interfaces stays in the `in` folder and act as use cases. The only was the adapter classes interact with the application is through the interfaces of this folder. In case we need save data in any database or call another service with HTTP new interfaces would be created into folder `out`. There interfaces were the application send any kind of data are called ports.
 
 The `service` folder has the implementation classes of the use case interfaces. Together with the domain classes the business logic are written.
 
+## Calculate Risk Profile Use Case
+
+The risk profile calculation is executed in the class `CalculateRiskProfileUseCaseService.java`. It receives a customer, fill the insurances with the customer's base score, get the rules from factory and apply them.
+```java
+public EnumMap<InsuranceType, Insurance> calculate(Customer customer) {
+    var insurances = fillInsurancesScore(customer);
+    applyRules(customer, insurances, ruleFactory.getRules());
+    return insurances;
+}
+```
+
+In case a new insurance needs to be considered in the business, we just need to add it into `InsuranceType` enum and add in the `RiskProfileApiResponse` class in the `adapter` layer. I chose to create the RiskProfileApiResponse class with fixed fields to improve readability but it could be created as a Map<String, String>. With it the respose would be dynamic.
+```java
+public enum InsuranceType {
+    LIFE, DISABILITY, HOME, AUTO
+}
+```
+In case we need to add new rules, we need to create a new domain class rule, implement the interface Rule and add it into the RulesFactory
 
 
 ## License

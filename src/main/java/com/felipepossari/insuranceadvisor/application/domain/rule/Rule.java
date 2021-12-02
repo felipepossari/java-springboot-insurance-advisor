@@ -7,6 +7,5 @@ import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance
 import java.util.EnumMap;
 
 public interface Rule {
-
     void apply(Customer customer, EnumMap<InsuranceType, Insurance> insurances);
 }
