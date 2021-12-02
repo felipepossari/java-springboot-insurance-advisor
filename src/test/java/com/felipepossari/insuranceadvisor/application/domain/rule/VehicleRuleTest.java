@@ -41,6 +41,7 @@ class VehicleRuleTest {
                 .vehicle(LocalDateTime.now().getYear() - year)
                 .baseScore(2)
                 .build();
+
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)
@@ -63,6 +64,7 @@ class VehicleRuleTest {
                 .vehicle(LocalDateTime.now().getYear() - year)
                 .baseScore(2)
                 .build();
+
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)

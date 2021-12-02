@@ -32,6 +32,7 @@ class MaritalStatusRuleTest {
                 .maritalStatus(MaritalStatus.MARRIED)
                 .baseScore(2)
                 .build();
+
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)
@@ -51,6 +52,7 @@ class MaritalStatusRuleTest {
                 .maritalStatus(MaritalStatus.MARRIED)
                 .baseScore(1)
                 .build();
+
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)
@@ -70,6 +72,7 @@ class MaritalStatusRuleTest {
                 .maritalStatus(MaritalStatus.SINGLE)
                 .baseScore(3)
                 .build();
+
         EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
                 .anInsuranceList()
                 .customer(customer)

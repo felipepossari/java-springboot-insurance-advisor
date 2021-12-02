@@ -26,8 +26,13 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
     @Test
     void applyShouldDoNothingIsCustomerHasIncomeVehicleHouse() {
-        Customer customer = CustomerTestBuilder.aCustomer().build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .build();
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -39,8 +44,15 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
     @Test
     void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoIncome() {
-        Customer customer = CustomerTestBuilder.aCustomer().income(0).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .income(0)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -52,8 +64,15 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
     @Test
     void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoHouse() {
-        Customer customer = CustomerTestBuilder.aCustomer().house(null).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .house(null)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -65,8 +84,14 @@ class IncomeVehicleHouseEligibilityRuleTest {
 
     @Test
     void applyShouldMakeInsurancesIneligiblyWhenCustomerHasNoVehicle() {
-        Customer customer = CustomerTestBuilder.aCustomer().vehicle(null).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .vehicle(null).build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 

@@ -28,8 +28,15 @@ class IncomeRuleTest {
     @ParameterizedTest
     @ValueSource(ints = {200000, 300000})
     void applyShouldDeductRiskPointWhenUserIncomeIsBiggerThanTwoHundredK(int income) {
-        Customer customer = CustomerTestBuilder.aCustomer().income(income).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .income(income)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -42,8 +49,15 @@ class IncomeRuleTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 199999})
     void applyShouldDoNothingWhenUserIncomeIsLowerThanTwoHundredK(int income) {
-        Customer customer = CustomerTestBuilder.aCustomer().income(income).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .income(income)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 

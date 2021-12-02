@@ -26,8 +26,15 @@ class AgeOverSixtyRuleTest {
 
     @Test
     void applyShouldMakeInsurancesIneligiblyWhenCustomerIsOverThanSixtyYears() {
-        Customer customer = CustomerTestBuilder.aCustomer().age(61).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .age(61)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -39,8 +46,13 @@ class AgeOverSixtyRuleTest {
 
     @Test
     void applyShouldMakeInsurancesIneligiblyWhenCustomerIsUnderThanSixtyYears() {
-        Customer customer = CustomerTestBuilder.aCustomer().age(60).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .age(60)
+                .build();
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .build();
 
         rule.apply(customer, insurances);
 

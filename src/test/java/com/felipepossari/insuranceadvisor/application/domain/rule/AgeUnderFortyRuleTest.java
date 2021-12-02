@@ -29,8 +29,15 @@ class AgeUnderFortyRuleTest {
     @ParameterizedTest
     @ValueSource(ints = {10,20,29})
     void applyShouldDeductTwoRiskPointsWhenUserIsUnderThirtyYears(int age){
-        Customer customer = CustomerTestBuilder.aCustomer().age(age).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .age(age)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
@@ -43,8 +50,15 @@ class AgeUnderFortyRuleTest {
     @ParameterizedTest
     @ValueSource(ints = {30,35,40})
     void applyShouldDeductOneRiskPointWhenUserHasBetweenThirtyFortyYears(int age){
-        Customer customer = CustomerTestBuilder.aCustomer().age(age).build();
-        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder.anInsuranceList().build();
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .baseScore(3)
+                .age(age)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
 
         rule.apply(customer, insurances);
 
