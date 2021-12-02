@@ -3,8 +3,6 @@ package com.felipepossari.insuranceadvisor.application.service;
 import com.felipepossari.insuranceadvisor.application.domain.customer.Customer;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.Insurance;
 import com.felipepossari.insuranceadvisor.application.domain.insurance.InsuranceType;
-import com.felipepossari.insuranceadvisor.application.domain.rule.AgeOverSixtyRule;
-import com.felipepossari.insuranceadvisor.application.domain.rule.IncomeVehicleHouseEligibilityRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.Rule;
 import com.felipepossari.insuranceadvisor.application.helper.RuleFactory;
 import com.felipepossari.insuranceadvisor.application.port.in.CalculateRiskProfileUseCase;
