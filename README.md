@@ -83,8 +83,6 @@ mvn exec:java
     }
 ]
 ```
-
-## API Document
 ### Calculate Risk
 * **URL**: /risks
 * **Method**: POST
