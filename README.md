@@ -68,7 +68,7 @@ mvn exec:java
 ```
 
 | Field | Value |
-|--|--|--|
+|--|--|
 | auto | `economic`/`responsible`/`regular`/`ineligible` |
 | disability | `economic`/`responsible`/`regular`/`ineligible` |
 | home | `economic`/`responsible`/`regular`/`ineligible` |
