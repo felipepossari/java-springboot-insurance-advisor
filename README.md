@@ -90,7 +90,7 @@ mvn exec:java
 * **Method**: POST
 * **Body**: Customer Request
 * **Success Response**:
-    * **Code**: 200 Created
+    * **Code**: 200 OK
     * **Content**: Risk Profile Response
 * **Error Responses**:
     * **Code**: 400 Bad Request
@@ -126,6 +126,31 @@ Note: You can also run the collection `Risks API.postman_collection.json` locate
 | R009 | Risk questions values invalid. They must be zero or one |
 | R010 | Vehicle year value invalid |
 | R999  | An unknown error happened |
+
+
+## Project Folder Structure
+```
+.
+├── postman                                       # Folder with holds the collection
+└── src                                           # Source code
+    ├── main
+    │     ├── java
+    │     │         └── com
+    │     │             └── felipepossari
+    │     │                 └── insuranceadvisor
+    │     │                     ├── adapter       # Classes responsible for receive input data from outside world like REST API
+    │     │                     └── application   # System core. Contains the business logic
+    │     └── resources
+    └── test                                      # Test code classes
+        └── java
+            └── com
+                └── felipepossari
+                    └── insuranceadvisor
+                        ├── base                # Classes used by the tests. E.g.: Test builders and default constants
+                        ├── integration         # Integration test classes
+                        └── unit                # Unit test classes
+
+```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
