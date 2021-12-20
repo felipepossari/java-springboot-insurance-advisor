@@ -24,7 +24,7 @@ public class RiskBuilder {
         return Customer.builder()
                 .age(request.getAge())
                 .house(request.getHouse() != null ? House.valueOf(request.getHouse().getOwnershipStatus().toUpperCase()) : null)
-                .maritalStatus(MaritalStatus.valueOf(request.getMaritalStatus().toUpperCase()))
+                .maritalStatus(MaritalStatus.valueOf(MaritalStatus.parseMaritalStatus(request.getMaritalStatus())))
                 .dependents(request.getDependents())
                 .income(request.getIncome())
                 .vehicleYear(request.getVehicle() != null ? request.getVehicle().getYear() : null)

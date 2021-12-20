@@ -72,7 +72,8 @@ public class RiskRequestValidator implements Validator {
     private void validateMaritalStatus(Errors errors, CustomerDataApiRequest request) {
         if (StringUtils.isEmpty(request.getMaritalStatus())) {
             errors.reject(FIELD_MARITAL_STATUS_EMPTY.getCode(), FIELD_MARITAL_STATUS_EMPTY.getMessage());
-        } else if (!EnumUtils.isValidEnum(MaritalStatus.class, request.getMaritalStatus().toUpperCase())) {
+        } else if (!EnumUtils.isValidEnum(MaritalStatus.class,
+                MaritalStatus.parseMaritalStatus(request.getMaritalStatus()))) {
             errors.reject(FIELD_MARITAL_STATUS_INVALID.getCode(), FIELD_MARITAL_STATUS_INVALID.getMessage());
         }
     }
