@@ -17,6 +17,7 @@ In order to run this project you have to install:
 - [Java 11](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html);
 - [Maven](https://maven.apache.org/download.cgi);
 - [Postman](https://www.postman.com/downloads/);
+- [Docker](https://docs.docker.com/get-docker/);
 
 With everything installed you can follow the next steps.
 
@@ -26,6 +27,12 @@ With everything installed you can follow the next steps.
 git clone https://github.com/felipepossari/java-springboot-insurance-advisor.git
 mvn clean test
 mvn exec:java
+```
+
+## How to run with docker
+
+```bash
+docker run -d --name insurance-advisor -p 8080:8080 felipepossari/insurance-advisor:1.0
 ```
 
 ## API Documentation
