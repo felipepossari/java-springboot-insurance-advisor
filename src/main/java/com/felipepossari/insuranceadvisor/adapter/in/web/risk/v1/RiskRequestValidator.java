@@ -1,6 +1,7 @@
 package com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1;
 
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerDataApiRequest;
+import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerHouseApiRequest;
 import com.felipepossari.insuranceadvisor.application.domain.customer.House;
 import com.felipepossari.insuranceadvisor.application.domain.customer.MaritalStatus;
 import org.apache.commons.lang3.EnumUtils;
@@ -12,6 +13,7 @@ import org.springframework.validation.Validator;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_AGE_INVALID;
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_DEPENDENTS_INVALID;
@@ -46,16 +48,24 @@ public class RiskRequestValidator implements Validator {
         validateIncome(errors, request);
         validateMaritalStatus(errors, request);
         validateRiskQuestions(errors, request);
-        validateVehicle(errors, request);
+        validateVehicles(errors, request);
     }
 
-    private void validateVehicle(Errors errors, CustomerDataApiRequest request) {
-        if (!ObjectUtils.isEmpty(request.getVehicle())
-                && (ObjectUtils.isEmpty(request.getVehicle().getYear())
-                || (request.getVehicle().getYear() < 0
-                || request.getVehicle().getYear() > LocalDateTime.now().getYear() + 1))) {
+    private void validateVehicles(Errors errors, CustomerDataApiRequest request) {
+        if (!ObjectUtils.isEmpty(request.getVehicles())
+                && (isVehicleDataInvalid(request))) {
             errors.reject(FIELD_VEHICLE_INVALID.getCode(), FIELD_VEHICLE_INVALID.getMessage());
         }
+    }
+
+    private boolean isVehicleDataInvalid(CustomerDataApiRequest request) {
+        return request.getVehicles().stream().anyMatch(vehicle ->
+                ObjectUtils.isEmpty(vehicle.getYear())
+                        || (
+                                vehicle.getYear() < 0 || vehicle.getYear() > LocalDateTime.now().getYear() + 1
+                        || ObjectUtils.isEmpty(vehicle.getId()) || vehicle.getId() <= 0
+                )
+        );
     }
 
     private void validateRiskQuestions(Errors errors, CustomerDataApiRequest request) {
@@ -85,10 +95,16 @@ public class RiskRequestValidator implements Validator {
     }
 
     private void validateHouse(Errors errors, CustomerDataApiRequest request) {
-        if (!ObjectUtils.isEmpty(request.getHouse())
-                && !EnumUtils.isValidEnum(House.class, request.getHouse().getOwnershipStatus().toUpperCase())) {
+        if (!ObjectUtils.isEmpty(request.getHouses())
+                && isHousesEnumValid(request.getHouses())) {
             errors.reject(FIELD_HOUSE_INVALID.getCode(), FIELD_HOUSE_INVALID.getMessage());
         }
+    }
+
+    private boolean isHousesEnumValid(List<CustomerHouseApiRequest> houses) {
+        return houses.stream().anyMatch(house ->
+                !EnumUtils.isValidEnum(House.class, house.getOwnershipStatus().toUpperCase())
+        );
     }
 
     private void validateDependents(Errors errors, CustomerDataApiRequest request) {
