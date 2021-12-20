@@ -9,7 +9,7 @@ import java.util.EnumMap;
 public class MaritalStatusRule implements Rule{
     @Override
     public void apply(Customer customer, EnumMap<InsuranceType, Insurance> insurances) {
-        if (customer.isMarried()) {
+        if (customer.isMarried() || customer.hasDomesticPartnershipRelation()) {
             insurances.get(InsuranceType.LIFE).addRiskPoint();
             insurances.get(InsuranceType.DISABILITY).deductRiskPoint();
         }
