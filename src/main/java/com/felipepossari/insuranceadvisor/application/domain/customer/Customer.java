@@ -57,4 +57,12 @@ public class Customer {
     public boolean hasNewVehicle(int currentYear) {
         return hasVehicle() && currentYear - vehicleYear <= 5;
     }
+
+    public boolean areAllAnswersFalse(){
+        return baseScore == 0;
+    }
+
+    public boolean hasIncomeLowerThanTwentyFiveThousands(){
+        return income < 25000;
+    }
 }
