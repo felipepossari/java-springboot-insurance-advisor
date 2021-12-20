@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,9 +18,9 @@ import lombok.ToString;
 public class CustomerDataApiRequest {
     private Integer age;
     private Integer dependents;
-    private CustomerHouseApiRequest house;
+    private List<CustomerHouseApiRequest> houses;
     private Integer income;
     private String maritalStatus;
     private Integer[] riskQuestions;
-    private CustomerVehicleApiRequest vehicle;
+    private List<CustomerVehicleApiRequest> vehicles;
 }

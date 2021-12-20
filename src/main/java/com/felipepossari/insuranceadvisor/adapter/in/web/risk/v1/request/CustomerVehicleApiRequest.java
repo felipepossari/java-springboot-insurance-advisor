@@ -14,5 +14,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class CustomerVehicleApiRequest {
+    private Integer id;
     private Integer year;
 }

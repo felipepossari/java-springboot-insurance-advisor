@@ -14,5 +14,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class CustomerHouseApiRequest {
+    private Integer id;
     private String ownershipStatus;
 }
