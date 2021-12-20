@@ -7,6 +7,7 @@ import com.felipepossari.insuranceadvisor.application.domain.rule.HouseRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.IncomeRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.IncomeVehicleHouseEligibilityRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.MaritalStatusRule;
+import com.felipepossari.insuranceadvisor.application.domain.rule.RiskAnswerFalseAndLowIncomeRule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.Rule;
 import com.felipepossari.insuranceadvisor.application.domain.rule.VehicleRule;
 import com.felipepossari.insuranceadvisor.application.helper.date.DateTime;
@@ -31,7 +32,8 @@ public class RuleFactory {
                 new HouseRule(),
                 new DependentRule(),
                 new MaritalStatusRule(),
-                new VehicleRule(this.dateTime)
+                new VehicleRule(this.dateTime),
+                new RiskAnswerFalseAndLowIncomeRule()
         );
     }
 
