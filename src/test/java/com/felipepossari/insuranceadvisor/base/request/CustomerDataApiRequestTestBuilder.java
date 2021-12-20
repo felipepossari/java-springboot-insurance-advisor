@@ -4,6 +4,8 @@ import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.Custome
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerHouseApiRequest;
 import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.CustomerVehicleApiRequest;
 
+import java.util.List;
+
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.AGE;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.DEPENDENTS;
 import static com.felipepossari.insuranceadvisor.base.DefaultConstants.INCOME;
@@ -14,11 +16,11 @@ public class CustomerDataApiRequestTestBuilder {
 
     private Integer age = AGE;
     private Integer dependants = DEPENDENTS;
-    private CustomerHouseApiRequest house = CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build();
+    private List<CustomerHouseApiRequest> houses = List.of(CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build());
     private Integer income = INCOME;
     private String maritalStatus = MARITAL_STATUS_MARRIED;
     private Integer[] riskQuestions = RISK_QUESTIONS;
-    private CustomerVehicleApiRequest vehicle = CustomerVehicleApiRequestTestBuilder.aVehicleRequest().build();
+    private List<CustomerVehicleApiRequest> vehicles = List.of(CustomerVehicleApiRequestTestBuilder.aVehicleRequest().build());
 
     private CustomerDataApiRequestTestBuilder() {
     }
@@ -41,8 +43,8 @@ public class CustomerDataApiRequestTestBuilder {
         return this;
     }
 
-    public CustomerDataApiRequestTestBuilder house(CustomerHouseApiRequest house) {
-        this.house = house;
+    public CustomerDataApiRequestTestBuilder houses(List<CustomerHouseApiRequest> houses) {
+        this.houses = houses;
         return this;
     }
 
@@ -61,8 +63,8 @@ public class CustomerDataApiRequestTestBuilder {
         return this;
     }
 
-    public CustomerDataApiRequestTestBuilder vehicle(CustomerVehicleApiRequest vehicle) {
-        this.vehicle = vehicle;
+    public CustomerDataApiRequestTestBuilder vehicles(List<CustomerVehicleApiRequest> vehicles) {
+        this.vehicles = vehicles;
         return this;
     }
 
@@ -70,11 +72,11 @@ public class CustomerDataApiRequestTestBuilder {
         return CustomerDataApiRequest.builder()
                 .age(age)
                 .dependents(dependants)
-                .house(house)
+                .houses(houses)
                 .income(income)
                 .maritalStatus(maritalStatus)
                 .riskQuestions(riskQuestions)
-                .vehicle(vehicle)
+                .vehicles(vehicles)
                 .build();
     }
 }

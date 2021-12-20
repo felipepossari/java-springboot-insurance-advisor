@@ -4,6 +4,7 @@ import com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.request.Custome
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.felipepossari.insuranceadvisor.adapter.in.web.risk.v1.exception.RiskApiErrorReason.FIELD_AGE_INVALID;
@@ -52,7 +53,12 @@ public class InvalidCustomerRequestArguments {
 
     private static CustomerDataApiRequest invalidDifferentStatusHouseRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest()
-                .house(CustomerHouseApiRequestTestBuilder.anInvalidHouseStatusRequest().build())
+                .houses(
+                        List.of(
+                                CustomerHouseApiRequestTestBuilder.anOwnedHouseRequest().build(),
+                                CustomerHouseApiRequestTestBuilder.anInvalidHouseStatusRequest().build()
+                        )
+                )
                 .build();
     }
 
@@ -87,21 +93,26 @@ public class InvalidCustomerRequestArguments {
 
     private static CustomerDataApiRequest invalidNullYearVehicleRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest()
-                .vehicle(CustomerVehicleApiRequestTestBuilder.aNullVehicleYearRequest().build()).build();
+                .vehicles(List.of(CustomerVehicleApiRequestTestBuilder.aNullVehicleYearRequest().build())).build();
     }
 
     private static CustomerDataApiRequest invalidYearVehicleRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest()
-                .vehicle(CustomerVehicleApiRequestTestBuilder.anInvalidVehicleYearRequest().build()).build();
+                .vehicles(
+                        List.of(
+                                CustomerVehicleApiRequestTestBuilder.aVehicleRequest().build(),
+                                CustomerVehicleApiRequestTestBuilder.anInvalidVehicleYearRequest().build())
+                )
+                .build();
     }
 
     private static CustomerDataApiRequest invalidYearBiggerCurrentYearPlusTwoVehicleRequest() {
         return CustomerDataApiRequestTestBuilder.aCustomerDataRequest()
-                .vehicle(
+                .vehicles(List.of(
                         CustomerVehicleApiRequestTestBuilder
                                 .aVehicleRequest()
                                 .year(LocalDateTime.now().getYear() + 2)
-                                .build())
+                                .build()))
                 .build();
     }
 }
