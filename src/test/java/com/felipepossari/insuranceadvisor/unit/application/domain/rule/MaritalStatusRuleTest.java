@@ -68,7 +68,47 @@ class MaritalStatusRuleTest {
     }
 
     @Test
-    void applyShouldDoNothingWhenUserHasIsNotMarried() {
+    void applyShouldAddRiskPointLifeAndDeductRiskPointDisabilityWhenUserHasDomesticPartnershipRelation() {
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .maritalStatus(MaritalStatus.DOMESTIC_PARTNERSHIP)
+                .baseScore(2)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
+
+        rule.apply(customer, insurances);
+
+        Assertions.assertEquals(REGULAR, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(RESPONSIBLE, insurances.get(LIFE).getScoreResult());
+    }
+
+    @Test
+    void applyShouldAddRiskPointLifeAndDeductRiskPointDisabilityWhenUserHasDomesticPartnershipRelation2() {
+        Customer customer = CustomerTestBuilder.aCustomer()
+                .maritalStatus(MaritalStatus.DOMESTIC_PARTNERSHIP)
+                .baseScore(1)
+                .build();
+
+        EnumMap<InsuranceType, Insurance> insurances = EnumMapInsurancesTestBuilder
+                .anInsuranceList()
+                .customer(customer)
+                .build();
+
+        rule.apply(customer, insurances);
+
+        Assertions.assertEquals(ECONOMIC, insurances.get(DISABILITY).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(AUTO).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(HOME).getScoreResult());
+        Assertions.assertEquals(REGULAR, insurances.get(LIFE).getScoreResult());
+    }
+
+    @Test
+    void applyShouldDoNothingWhenUserIsNotMarried() {
         Customer customer = CustomerTestBuilder.aCustomer()
                 .maritalStatus(MaritalStatus.SINGLE)
                 .baseScore(3)

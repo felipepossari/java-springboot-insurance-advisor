@@ -271,6 +271,26 @@ class RiskApiIntegrationTest {
                                 .home(ECONOMIC)
                                 .life(REGULAR)
                                 .build()
+                ),
+                Arguments.arguments(
+                        CustomerDataApiRequestTestBuilder
+                                .aCustomerDataRequest()
+                                .age(50)
+                                .dependants(2)
+                                .house(CustomerHouseApiRequestTestBuilder.aMortgagedHouseRequest().build())
+                                .income(50000)
+                                .maritalStatus(MaritalStatus.DOMESTIC_PARTNERSHIP.name())
+                                .riskQuestions(new Integer[]{0, 1, 0})
+                                .vehicle(CustomerVehicleApiRequestTestBuilder.aVehicleRequest()
+                                        .year(LocalDateTime.now().getYear()).build())
+                                .build()
+                        ,
+                        RiskProfileApiResponseTestBuilder.aRiskProfileApiResponse()
+                                .auto(REGULAR)
+                                .disability(REGULAR)
+                                .home(REGULAR)
+                                .life(RESPONSIBLE)
+                                .build()
                 )
         );
     }
