@@ -28,6 +28,10 @@ public class CustomerTestBuilder {
         return new CustomerTestBuilder();
     }
 
+    public static CustomerTestBuilder aCustomerWithAllAnswersFalse() {
+        return new CustomerTestBuilder().baseScore(0);
+    }
+
     public CustomerTestBuilder age(Integer age) {
         this.age = age;
         return this;
