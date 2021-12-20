@@ -65,4 +65,8 @@ public class Customer {
     public boolean hasIncomeLowerThanTwentyFiveThousands(){
         return income < 25000;
     }
+
+    public boolean hasDomesticPartnershipRelation() {
+        return MaritalStatus.DOMESTIC_PARTNERSHIP.equals(this.maritalStatus);
+    }
 }
